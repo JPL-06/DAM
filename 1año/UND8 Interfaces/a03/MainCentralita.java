@@ -14,6 +14,10 @@ public class MainCentralita {
         for (Notificable canal : canales) {
             canal.enviarNotificacion(avisoEmergencia);
         }
-
+        Notificable paloma = new Notificable() {
+        @override 
+        public void NotificacionPaloma() {
+            System.out.println("Cuu cuu: El CEO os saluda");
+        }
     }
 }
