@@ -1,0 +1,6 @@
+public class ImpresoraBasica implements Imprimible {
+    @Override
+    public void imprimir() {
+        System.out.println("ImpresoraBasica: Imprimiendo un documento...");
+    }
+}
