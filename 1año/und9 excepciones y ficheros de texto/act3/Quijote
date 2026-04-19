@@ -1,0 +1,49 @@
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Quijote {
+
+    public static void main(String[] args) {
+        String nombreFichero = "Quijote.txt";
+        String linea1 = "En un lugar de La Mancha,\n";
+        String linea2 = "de cuyo nombre no quiero acordarme";
+
+        FileWriter fw = null;
+
+        try {
+
+            fw = new FileWriter(nombreFichero);
+            
+            for (int i = 0; i < linea1.length(); i++) {
+                fw.write(linea1.charAt(i)); 
+            }
+            System.out.println("Primera linea escrita correctamente.");
+            
+        } catch (IOException e) {
+            System.out.println("Error al escribir la primera linea: " + e.getMessage());
+        } finally {
+            try {
+                if (fw != null) fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+
+            fw = new FileWriter(nombreFichero, true);
+            
+            fw.write(linea2); 
+            System.out.println("Segunda linea añadida (append).");
+            
+        } catch (IOException e) {
+            System.out.println("Error al añadir la segunda linea: " + e.getMessage());
+        } finally {
+            try {
+                if (fw != null) fw.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
