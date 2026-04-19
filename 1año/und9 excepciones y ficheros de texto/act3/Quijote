@@ -2,48 +2,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Quijote {
-
     public static void main(String[] args) {
-        String nombreFichero = "Quijote.txt";
-        String linea1 = "En un lugar de La Mancha,\n";
-        String linea2 = "de cuyo nombre no quiero acordarme";
+        String fichero = "Quijote.txt";
 
-        FileWriter fw = null;
-
-        try {
-
-            fw = new FileWriter(nombreFichero);
-            
+        try (FileWriter fw = new FileWriter(fichero)) {
+            String linea1 = "En un lugar de La Mancha,\n";
             for (int i = 0; i < linea1.length(); i++) {
-                fw.write(linea1.charAt(i)); 
+                fw.write(linea1.charAt(i));
             }
-            System.out.println("Primera linea escrita correctamente.");
-            
+            System.out.println("Linea 1 escrita.");
         } catch (IOException e) {
-            System.out.println("Error al escribir la primera linea: " + e.getMessage());
-        } finally {
-            try {
-                if (fw != null) fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            System.out.println("Error en parte 1: " + e.getMessage());
         }
 
-        try {
-
-            fw = new FileWriter(nombreFichero, true);
-            
-            fw.write(linea2); 
-            System.out.println("Segunda linea añadida (append).");
-            
+        try (FileWriter fw = new FileWriter(fichero, true)) {
+            fw.write("de cuyo nombre no quiero acordarme");
+            System.out.println("Linea 2 añadida con éxito.");
         } catch (IOException e) {
-            System.out.println("Error al añadir la segunda linea: " + e.getMessage());
-        } finally {
-            try {
-                if (fw != null) fw.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            System.out.println("Error en parte 2: " + e.getMessage());
         }
     }
 }
