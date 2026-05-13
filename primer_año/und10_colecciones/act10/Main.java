@@ -39,5 +39,6 @@ public class Main {
         
         System.out.println("El segundo socio (ganador del premio) es:");
         System.out.println(segundoSocio);
+        
     }
 }
