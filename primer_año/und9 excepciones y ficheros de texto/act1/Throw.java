@@ -1,0 +1,10 @@
+
+package dam.primer_año.und9_excepciones_y_ficheros_de_texto.act1;
+import java.util.Scanner;
+import java.util.InputMismatchException;
+
+public Integer leerEnteroThrows() throws InputMismatchException {
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Introduce un número entero: ");
+    return sc.nextInt();
+}

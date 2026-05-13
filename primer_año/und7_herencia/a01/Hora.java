@@ -1,4 +1,4 @@
-package a01;
+package dam.primer_año.und7_herencia.a01;
 public class Hora {
     int hora;
     int min;

@@ -1,4 +1,4 @@
-package a00;
+package dam.primer_año.und7_herencia.a00;
 
 public class Persona {
     private String nombre;

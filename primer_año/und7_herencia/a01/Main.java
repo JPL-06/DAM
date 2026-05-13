@@ -1,5 +1,6 @@
-package a01;
-public static void main(System[]args){
+package dam.primer_año.und7_herencia.a01;
+public class Main {
+    public static void main(String[] args) {
         Hora h1 = new Hora(10, 30);
 
         System.out.println("Hora inicial: " + h1);
