@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified"
+           attributeFormDefault="unqualified">
+
+  <!-- Tipo restringido para el atributo 'estado' (solo C, E, R) -->
+  <xs:simpleType name="estadoType">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="C|E|R"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Elemento raíz -->
+  <xs:element name="estacion">
+    <xs:complexType>
+      <!-- nombre, trenes y fecha pueden aparecer en cualquier orden -->
+      <xs:all>
+        <xs:element name="nombre" type="xs:string"/>
+
+        <xs:element name="trenes">
+          <xs:complexType>
+            <!-- De cero a muchos elementos 'tren' -->
+            <xs:sequence>
+              <xs:element name="tren" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <!-- El orden interno de cada tren es fijo y debe respetarse -->
+                  <xs:sequence>
+                    <!-- Elemento vacío que indica que el tren es diario (opcional) -->
+                    <xs:element name="diario" minOccurs="0" maxOccurs="1">
+                      <xs:complexType/>
+                    </xs:element>
+
+                    <xs:element name="origen" type="xs:string"/>
+                    <xs:element name="destino" type="xs:string"/>
+                    <xs:element name="hora-salida" type="xs:time"/>
+                    <xs:element name="hora-llegada" type="xs:time"/>
+                  </xs:sequence>
+
+                  <!-- Atributos: 'código' obligatorio y único (xs:ID), 'estado' con restricción -->
+                  <xs:attribute name="código" type="xs:ID" use="required"/>
+                  <xs:attribute name="estado" type="estadoType" default="E"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="fecha" type="xs:date"/>
+      </xs:all>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
