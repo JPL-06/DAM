@@ -1,7 +1,8 @@
-//package dam.segundo_año.desarrollo_de_interfaces;
+
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Locale;
 
 public class CalculadoraCientifica extends JFrame {
 
@@ -22,21 +23,24 @@ public class CalculadoraCientifica extends JFrame {
         setSize(430, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        getContentPane().setBackground(new Color(25, 30, 40)); // Fondo azul oscuro
+
+        // Fondo de la ventana principal
+        getContentPane().setBackground(new Color(18, 18, 18)); // Negro antracita suave
 
         // Aplicamos GridBagLayout al contenedor principal
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Paleta de colores para la interfaz (Cambio explícito de atributos)
-        Color colorFondoDisplay = new Color(15, 20, 30);
-        Color colorTextoOperacion = new Color(170, 185, 200);
-        Color colorTextoResultado = new Color(240, 245, 250);
-        Color colorBtnNumero = new Color(45, 55, 72);
-        Color colorBtnOperador = new Color(74, 144, 226);
-        Color colorBtnTrigo = new Color(155, 89, 182);
-        Color colorBtnLimpiar = new Color(231, 76, 60);
-        Color colorBtnIgual = new Color(46, 204, 113);
+        // Paleta de colores sobria y oscura
+        Color colorFondoDisplay = new Color(28, 28, 28);       
+        Color colorTextoOperacion = new Color(140, 140, 140);   
+        Color colorTextoResultado = new Color(220, 220, 220);   
+
+        Color colorBtnNumero = new Color(38, 38, 38);          
+        Color colorBtnOperador = new Color(55, 55, 55);        
+        Color colorBtnTrigo = new Color(48, 52, 60);           
+        Color colorBtnLimpiar = new Color(120, 45, 45);        
+        Color colorBtnIgual = new Color(40, 95, 60);           
 
         // 1. PANTALLA SUPERIOR: OPERACIÓN
         displayOperacion = new JTextField();
@@ -88,7 +92,7 @@ public class CalculadoraCientifica extends JFrame {
         gbc.weighty = 0.1;
         gbc.insets = new Insets(3, 3, 3, 3);
 
-        // FILA 4: TRIGONOMÉTRICAS Y BOTÓN LIMPIAR (Limpiar ocupa 2 filas)
+        // FILA 4: TRIGONOMÉTRICAS Y BOTÓN LIMPIAR
         JButton btnSeno = construirBoton("sin", colorBtnTrigo, Color.WHITE);
         gbc.gridx = 0; gbc.gridy = 3; add(btnSeno, gbc);
 
@@ -100,11 +104,11 @@ public class CalculadoraCientifica extends JFrame {
 
         JButton btnBorrarTodo = construirBoton("C", colorBtnLimpiar, Color.WHITE);
         gbc.gridx = 3; gbc.gridy = 3;
-        gbc.gridheight = 2; // Uso avanzado: ocupa 2 filas
+        gbc.gridheight = 2; 
         gbc.fill = GridBagConstraints.BOTH;
         add(btnBorrarTodo, gbc);
 
-        gbc.gridheight = 1; // Restauramos altura por defecto
+        gbc.gridheight = 1; 
 
         // FILA 5: DÍGITOS 7, 8, 9
         JButton btnDigit7 = construirBoton("7", colorBtnNumero, colorTextoResultado);
@@ -155,16 +159,18 @@ public class CalculadoraCientifica extends JFrame {
         JButton btnRestar = construirBoton("-", colorBtnOperador, Color.WHITE);
         gbc.gridx = 3; gbc.gridy = 7; add(btnRestar, gbc);
 
-        // FILA 9: PARÉNTESIS, SUMA Y BOTÓN IGUAL (Igual ocupa 2 columnas)
+        // FILA 9: PARÉNTESIS, SUMA Y BOTÓN IGUAL
         JButton btnAbrePar = construirBoton("(", colorBtnOperador, Color.WHITE);
         gbc.gridx = 0; gbc.gridy = 8; add(btnAbrePar, gbc);
 
+        JButton btnCierraPar = construirBoton(")", colorBtnOperador, Color.WHITE);
+        gbc.gridx = 1; gbc.gridy = 8; add(btnCierraPar, gbc);
+
         JButton btnSumar = construirBoton("+", colorBtnOperador, Color.WHITE);
-        gbc.gridx = 1; gbc.gridy = 8; add(btnSumar, gbc);
+        gbc.gridx = 2; gbc.gridy = 8; add(btnSumar, gbc);
 
         JButton btnCalcular = construirBoton("=", colorBtnIgual, Color.WHITE);
-        gbc.gridx = 2; gbc.gridy = 8;
-        gbc.gridwidth = 2; // Uso avanzado: ocupa 2 columnas
+        gbc.gridx = 3; gbc.gridy = 8;
         add(btnCalcular, gbc);
 
         // ASIGNACIÓN DE EVENTOS
@@ -182,6 +188,7 @@ public class CalculadoraCientifica extends JFrame {
         btnDecimal.addActionListener(e -> anadirSimbolo("."));
         btnConstantePi.addActionListener(e -> anadirSimbolo("π"));
         btnAbrePar.addActionListener(e -> anadirSimbolo("("));
+        btnCierraPar.addActionListener(e -> anadirSimbolo(")"));
 
         btnSumar.addActionListener(e -> anadirSimbolo("+"));
         btnRestar.addActionListener(e -> anadirSimbolo("-"));
@@ -217,106 +224,29 @@ public class CalculadoraCientifica extends JFrame {
         rb.setFocusPainted(false);
     }
 
-    // Procesamiento de la operación
+    // --- AQUÍ ESTÁ EL CAMBIO PRINCIPAL ---
+    // Procesamiento de la operación delegando en la clase de tu amigo
     private void ejecutarCalculo() {
         String expresion = displayOperacion.getText();
         if (expresion.trim().isEmpty()) return;
 
         try {
-            double valor = procesarExpresion(expresion, rbGrados.isSelected());
+            // Llamamos a la clase externa y le pasamos si está en grados
+            double valor = EvaluarExpresion.evaluarExpresion(expresion, rbGrados.isSelected());
+            
+            // Formateo para quitar decimales innecesarios
             if (valor == (long) valor) {
-                displayResultado.setText(String.format("%d", (long) valor));
+                displayResultado.setText(String.format(Locale.US, "%d", (long) valor));
             } else {
-                displayResultado.setText(String.format("%.8f", valor).replaceAll("0+$", "").replaceAll(",$", "."));
+                displayResultado.setText(String.format(Locale.US, "%.8f", valor)
+                        .replaceAll("0+$", "")
+                        .replaceAll("\\.$", ""));
             }
         } catch (Exception ex) {
             displayResultado.setText("Error");
         }
     }
 
-    // Evaluador matemático mediante análisis sintáctico
-    private static double procesarExpresion(String cadena, boolean modoGrados) {
-        return new Object() {
-            int indice = -1, caracterActual;
-
-            void avanzar() {
-                caracterActual = (++indice < cadena.length()) ? cadena.charAt(indice) : -1;
-            }
-
-            boolean comprobar(int charEsperado) {
-                while (caracterActual == ' ') avanzar();
-                if (caracterActual == charEsperado) {
-                    avanzar();
-                    return true;
-                }
-                return false;
-            }
-
-            double evaluar() {
-                avanzar();
-                double res = evaluarSumaResta();
-                if (indice < cadena.length()) throw new RuntimeException("Error sintáctico");
-                return res;
-            }
-
-            double evaluarSumaResta() {
-                double res = evaluarMultiplicacionDivision();
-                for (;;) {
-                    if (comprobar('+')) res += evaluarMultiplicacionDivision();
-                    else if (comprobar('-')) res -= evaluarMultiplicacionDivision();
-                    else return res;
-                }
-            }
-
-            double evaluarMultiplicacionDivision() {
-                double res = evaluarFactorBase();
-                for (;;) {
-                    if (comprobar('*')) res *= evaluarFactorBase();
-                    else if (comprobar('/')) res /= evaluarFactorBase();
-                    else return res;
-                }
-            }
-
-            double evaluarFactorBase() {
-                if (comprobar('+')) return evaluarFactorBase();
-                if (comprobar('-')) return -evaluarFactorBase();
-
-                double res;
-                int posInicio = this.indice;
-
-                if (comprobar('(')) {
-                    res = evaluarSumaResta();
-                    comprobar(')');
-                } else if ((caracterActual >= '0' && caracterActual <= '9') || caracterActual == '.') {
-                    while ((caracterActual >= '0' && caracterActual <= '9') || caracterActual == '.') avanzar();
-                    res = Double.parseDouble(cadena.substring(posInicio, this.indice));
-                } else if ((caracterActual >= 'a' && caracterActual <= 'z') || caracterActual == 'π') {
-                    while ((caracterActual >= 'a' && caracterActual <= 'z') || caracterActual == 'π') avanzar();
-                    String identificador = cadena.substring(posInicio, this.indice);
-
-                    if (identificador.equals("π")) {
-                        res = Math.PI;
-                    } else {
-                        res = evaluarFactorBase();
-                        double angulo = modoGrados ? Math.toRadians(res) : res;
-
-                        switch (identificador) {
-                            case "sin": res = Math.sin(angulo); break;
-                            case "cos": res = Math.cos(angulo); break;
-                            case "tan": res = Math.tan(angulo); break;
-                            default: throw new RuntimeException("Desconocido");
-                        }
-                    }
-                } else {
-                    throw new RuntimeException("Símbolo no admitido");
-                }
-
-                return res;
-            }
-        }.evaluar();
-    }
-
-    // Único método main necesario para arrancar el programa
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             new CalculadoraCientifica().setVisible(true);
