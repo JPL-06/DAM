@@ -119,6 +119,37 @@ def read():
     with open(f"texto/archivo.txt", "r") as archivo:
         contenido = archivo.read()
         print(contenido)
+
 def write():
     with open(f"texto/archivo.txt", "w") as archivo:
         archivo.write("hola soy Ruben Chicano Hernandez")
+
+def append():
+    with open(f"texto/archivo.txt", "a") as archivo:
+        archivo.write("\nHola soy Ruben Chicano Hernandez")
+
+#ejercicio 31
+x = "texto.txt" 
+
+with open(x, "a") as archivo:
+    fichero.write("Hola soy Ruben Chicano Hernandez")
+
+def lineas():
+    with open("texto.txt", "r") as archivo:
+        suma = 0
+        for linea in archivo:
+            suma += 1
+
+def palabras():
+    with open("texto.txt", "r") as archivo:
+        suma = 0
+        for linea in archivo:
+            palabras = linea.split()
+            suma += len(palabras)
+def caracteres():
+    with open("texto.txt", "r") as archivo:
+        suma = 0
+        for linea in archivo:
+            suma += len(linea)
+
+
