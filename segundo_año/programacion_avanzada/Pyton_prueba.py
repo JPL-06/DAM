@@ -56,17 +56,69 @@ def ej19():
         else:
             print("no esta en la lista")
 #ejercicio 20
-def ej20():
-    lista = [7,1,5,8,4,10]
-    numero = 0
-    numero2 = 0
+lista = [7,1,5,8,4,10]
+numero = lista[0]
+numero2 = lista[0]
 
+def ej20():   
     for n in range(len(lista)):
         if numero2 < lista[n]:
             numero = numero2
             numero2 = lista[n]
         if numero < lista[n]:
-                    numero2 = lista[n]
-    
+            numero2 = lista[n]
 print("el numero mayor es: ", numero2)
 print("el segundo mayor es : " ,numero)
+
+#ejercicio 27
+def ej27():
+    frase ="hola soy Aitor"
+    frase2 = input("dame un insulto para Aitor:")
+
+    print("".join(frase2.split()[::-1]))
+#ejercicio 28
+def es_pare(n):
+    if n == 0 :
+        return True
+    elif n == 1:
+        return False
+    else:
+        return es_pare(n-2)
+#ejercicio 29
+def mayor():
+    lista = [2,4,5,7,10,27,1,7,9,40,210,30]
+    NumeroMayor = lista[0]
+    for n in lista:
+        if n > NumeroMayor:
+            NumeroMayor = n
+
+    print(f"el numero mayor es: {NumeroMayor}")
+def mayor2(lista):
+    if len(lista) == 1:
+        return lista[0]
+    else:
+        primero = lista[0]
+        sublista = lista[1:]
+        mayor_sub = mayor2(sublista)
+
+        if primero > mayor_sub:
+            return primero
+        else:
+            return mayor_sub
+
+def suma_recursiva(lista):
+    if len(lista) == 0:
+        return 0
+    else:
+        primero = lista[0]
+        sublista = lista[1:]
+
+        return primero + suma_recursiva(sublista)
+#ejercicio 30
+def read():
+    with open(f"texto/archivo.txt", "r") as archivo:
+        contenido = archivo.read()
+        print(contenido)
+def write():
+    with open(f"texto/archivo.txt", "w") as archivo:
+        archivo.write("hola soy Ruben Chicano Hernandez")
