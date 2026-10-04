@@ -32,8 +32,8 @@ def ej5():
 
     for n in range(num1 + 1):
         print(num1-n)
-#ejercicio 18
-def ej18():
+#ejercicio 6
+def ej6():
     nombre = input("pon un nombre:")
     nombre1 = input("pon otro nombre:")
 
@@ -45,8 +45,8 @@ def ej18():
         else:
             print("no esta en la lista")
 
-#ejercicio 19
-def ej19():
+#ejercicio 7
+def ej7():
     lista2 = []
     lista = [4,2,4,7,2,9.4]
     for n in lista:
@@ -55,12 +55,12 @@ def ej19():
             print("esta en la lista")
         else:
             print("no esta en la lista")
-#ejercicio 20
+#ejercicio 8
 lista = [7,1,5,8,4,10]
 numero = lista[0]
 numero2 = lista[0]
 
-def ej20():   
+def ej8():   
     for n in range(len(lista)):
         if numero2 < lista[n]:
             numero = numero2
@@ -70,13 +70,13 @@ def ej20():
 print("el numero mayor es: ", numero2)
 print("el segundo mayor es : " ,numero)
 
-#ejercicio 27
-def ej27():
+#ejercicio 9
+def ej9():
     frase ="hola soy Aitor"
     frase2 = input("dame un insulto para Aitor:")
 
     print("".join(frase2.split()[::-1]))
-#ejercicio 28
+#ejercicio 10
 def es_pare(n):
     if n == 0 :
         return True
@@ -84,7 +84,7 @@ def es_pare(n):
         return False
     else:
         return es_pare(n-2)
-#ejercicio 29
+#ejercicio 11
 def mayor():
     lista = [2,4,5,7,10,27,1,7,9,40,210,30]
     NumeroMayor = lista[0]
@@ -114,7 +114,7 @@ def suma_recursiva(lista):
         sublista = lista[1:]
 
         return primero + suma_recursiva(sublista)
-#ejercicio 30
+#ejercicio 12
 def read():
     with open(f"texto/archivo.txt", "r") as archivo:
         contenido = archivo.read()
@@ -128,11 +128,11 @@ def append():
     with open(f"texto/archivo.txt", "a") as archivo:
         archivo.write("\nHola soy Ruben Chicano Hernandez")
 
-#ejercicio 31
+#ejercicio 13
 x = "texto.txt" 
 
 with open(x, "a") as archivo:
-    fichero.write("Hola soy Ruben Chicano Hernandez")
+    archivo.write("Hola soy Ruben Chicano Hernandez")
 
 def lineas():
     with open("texto.txt", "r") as archivo:
@@ -152,4 +152,15 @@ def caracteres():
         for linea in archivo:
             suma += len(linea)
 
+#ejer 14
+def ej14():
+    with open("texto.txt", "r") as archivo:
+        contenido = archivo.read()
+        palabras = contenido.split()
+        a = 0
+        for palabra in palabras:
+            if len(palabra) < 4:
+                a += 1
+                palabras.remove(palabra)
+#sudoku
 
