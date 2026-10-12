@@ -36,5 +36,6 @@ public class Main {
         System.out.println("\nHora antes de incrementar: " + h2);
         h2.inc();
         System.out.println("Hora después de incrementar: " + h2);
+    }
 }
 
