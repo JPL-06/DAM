@@ -21,12 +21,14 @@ def sinpila():
         else:
             print("Opción no válida.")
 #ejercicio
+
 lista = [4, 2, 7, 1, 3]
-salida=[]
-def pila():
-    for i in lista:
-        j =lista[i+1] if i < len(lista) - 1 else -1
-        if lista[i] > j:
-            salida.append(lista[i])
-        else:
-            salida.append(-1) 
+salida = [-1] * (len(lista))
+for i in range(len(lista)):
+    elemento = lista[i]
+    j = i + 1
+    while j < len(lista):
+        if lista[j] > elemento:
+            salida[i] = lista[j]
+            break
+        j=+1
